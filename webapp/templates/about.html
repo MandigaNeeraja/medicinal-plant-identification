@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Medicinal Plant Identification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>🌿 Medicinal Plant Identifier</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section style="background: white; border-radius: 15px; padding: 40px; margin: 30px 0; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);">
+            <h2 style="color: #667eea; margin-bottom: 30px;">About This Project</h2>
+            
+            <div style="line-height: 1.8;">
+                <h3 style="color: #764ba2; margin-top: 20px;">🎯 Project Overview</h3>
+                <p>
+                    This is a BTech Final Year Project for CSE-AIML students. The project aims to build an intelligent 
+                    system that can identify medicinal plants from leaf images using deep learning techniques and provide 
+                    information about their medicinal uses.
+                </p>
+
+                <h3 style="color: #764ba2; margin-top: 20px;">🔬 Technical Details</h3>
+                <ul style="padding-left: 20px;">
+                    <li><strong>Model Architecture:</strong> MobileNetV2 with Transfer Learning</li>
+                    <li><strong>Framework:</strong> TensorFlow/Keras</li>
+                    <li><strong>Training Data:</strong> ~500-1000 leaf images per plant species</li>
+                    <li><strong>Input Size:</strong> 224×224 RGB images</li>
+                    <li><strong>Plant Classes:</strong> Aloevera, Bhrami, Neem, Tulsi, Turmeric</li>
+                </ul>
+
+                <h3 style="color: #764ba2; margin-top: 20px;">🌱 Supported Medicinal Plants</h3>
+                <ul style="padding-left: 20px;">
+                    <li><strong>Aloevera:</strong> Skin burns, wounds, digestive health</li>
+                    <li><strong>Bhrami:</strong> Memory enhancement, cognitive improvement</li>
+                    <li><strong>Neem:</strong> Skin health, antibacterial properties</li>
+                    <li><strong>Tulsi:</strong> Cough relief, respiratory health</li>
+                    <li><strong>Turmeric:</strong> Anti-inflammatory, antioxidant properties</li>
+                </ul>
+
+                <h3 style="color: #764ba2; margin-top: 20px;">💻 Technology Stack</h3>
+                <ul style="padding-left: 20px;">
+                    <li><strong>Backend:</strong> Flask, Python</li>
+                    <li><strong>Machine Learning:</strong> TensorFlow, Keras, scikit-learn</li>
+                    <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript</li>
+                    <li><strong>Data Processing:</strong> NumPy, Pandas, OpenCV</li>
+                </ul>
+
+                <h3 style="color: #764ba2; margin-top: 20px;">📊 Model Performance</h3>
+                <p>
+                    The model achieves high accuracy in identifying medicinal plants from leaf images. 
+                    The system uses confidence thresholds to ensure reliable predictions and can fall back to 
+                    showing all predictions if confidence is low.
+                </p>
+
+                <h3 style="color: #764ba2; margin-top: 20px;">🚀 How to Use</h3>
+                <ol style="padding-left: 20px;">
+                    <li>Upload a clear image of a plant leaf</li>
+                    <li>The system will analyze the leaf characteristics</li>
+                    <li>View the identified plant name and confidence level</li>
+                    <li>Learn about the medicinal uses and health benefits</li>
+                </ol>
+
+                <h3 style="color: #764ba2; margin-top: 20px;">⚠️ Disclaimer</h3>
+                <p>
+                    This tool is for educational and informational purposes only. The predictions are based on 
+                    machine learning models and may not always be 100% accurate. Always consult with healthcare 
+                    professionals before using any medicinal plant for health purposes.
+                </p>
+
+                <h3 style="color: #764ba2; margin-top: 20px;">📚 References</h3>
+                <ul style="padding-left: 20px;">
+                    <li>MobileNetV2 Paper: https://arxiv.org/abs/1801.04381</li>
+                    <li>Transfer Learning in Deep Learning</li>
+                    <li>Traditional Medicinal Plants Documentation</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="/" style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">
+                    Back to Home
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Medicinal Plant Identification Project | BTech CSE-AIML</p>
+    </footer>
+</body>
+</html>

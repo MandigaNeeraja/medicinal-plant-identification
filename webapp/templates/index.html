@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicinal Plant Identification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>🌿 Medicinal Plant Identifier</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <h2>Identify Medicinal Plants from Leaf Images</h2>
+            <p>Upload a leaf image to discover the plant species and its medicinal uses</p>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div class="upload-box">
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="fileInput" name="file" accept="image/*" required>
+                        <label for="fileInput">
+                            <span class="upload-icon">📷</span>
+                            <span class="upload-text">Click to select image or drag & drop</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Preview Section (shown after selecting image) -->
+        <section id="previewSection" class="preview-section" style="display: none;">
+            <div class="preview-container">
+                <div class="preview-image-box">
+                    <img id="previewImage" src="" alt="Selected image preview">
+                </div>
+                <div class="preview-actions">
+                    <button id="predictBtn" class="btn btn-primary">Identify Plant</button>
+                    <button type="button" class="btn btn-secondary" onclick="changeImage()">Choose Another Image</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="spinner" style="display: none;">
+            <div class="spinner-border"></div>
+            <p>Analyzing image...</p>
+        </div>
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="results-section" style="display: none;">
+            <div class="results-container">
+                <div class="image-container">
+                    <img id="uploadedImage" src="" alt="Uploaded leaf image">
+                </div>
+                
+                <div class="info-container">
+                    <h3>Prediction Result</h3>
+                    
+                    <div class="result-box" id="resultBox">
+                        <h4 id="plantName"></h4>
+                        <div class="confidence">
+                            <span class="label">Confidence:</span>
+                            <div class="confidence-bar">
+                                <div id="confidenceBar" class="confidence-fill"></div>
+                            </div>
+                            <span id="confidencePercent" class="percent">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="uses-box" id="usesBox">
+                        <h5>Medicinal Uses:</h5>
+                        <ul id="useslist">
+                            <li>Loading...</li>
+                        </ul>
+                    </div>
+
+                    <div class="all-predictions">
+                        <h5>All Plant Predictions:</h5>
+                        <div id="predictionsList"></div>
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="resetForm()">Identify Another Plant</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Section -->
+        <section id="errorSection" class="error-section" style="display: none;">
+            <div class="alert alert-error">
+                <h4>Error</h4>
+                <p id="errorMessage"></p>
+                <button class="btn btn-secondary" onclick="resetForm()">Try Again</button>
+            </div>
+        </section>
+
+        <!-- Supported Plants Section -->
+        <section class="plants-section">
+            <h3>Supported Plant Species</h3>
+            <div class="plants-grid">
+                {% for plant in plants %}
+                <div class="plant-card">
+                    <h5>{{ plant }}</h5>
+                    <p class="plant-icon">🌱</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Medicinal Plant Identification Project | BTech CSE-AIML</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script_new.js') }}"></script>
+</body>
+</html>
