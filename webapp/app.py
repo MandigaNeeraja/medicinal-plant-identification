@@ -71,6 +71,35 @@ def plant_info(plant_name):
     return jsonify({'error': 'Plant not found'}), 404
 
 
+@app.route('/plant/<plant_name>')
+def plant_page(plant_name):
+    """Render plant detail page"""
+    if plant_name not in PLANT_CLASSES:
+        return render_template('404.html'), 404
+
+    plant_data = PLANT_CLASSES[plant_name]
+
+    # Provide safe defaults for expected fields
+    context = {
+        'plant_name': plant_name,
+        'scientific_name': plant_data.get('scientific_name', ''),
+        'common_names': plant_data.get('common_names', []),
+        'overview': plant_data.get('overview', 'Information not available.'),
+        'medicinal_uses': plant_data.get('medicinal_uses', ['Information not available.']),
+        'preparation': plant_data.get('preparation', {
+            'juice': 'Information not available.',
+            'powder': 'Information not available.',
+            'decoction': 'Information not available.'
+        }),
+        'dosage': plant_data.get('dosage', 'Information not available.'),
+        'safety': plant_data.get('safety', 'Information not available.'),
+        'best_time': plant_data.get('best_time', 'Information not available.'),
+        'did_you_know': plant_data.get('did_you_know', "Interesting facts will appear here.")
+    }
+
+    return render_template('plant_detail.html', **context)
+
+
 @app.route('/predict', methods=['POST'])
 def predict():
     """Handle image upload and prediction"""
