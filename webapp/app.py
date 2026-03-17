@@ -12,6 +12,7 @@ import numpy as np
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.predictor import PlantPredictor
+from assis import MedicinalPlantChatAssistant
 from config import PLANT_CLASSES, UPLOAD_FOLDER, ALLOWED_EXTENSIONS, IMG_HEIGHT, IMG_WIDTH, CONFIDENCE_THRESHOLD
 
 # Initialize Flask app
@@ -44,6 +45,9 @@ except Exception as e:
     import traceback
     traceback.print_exc()
     predictor = None
+
+# Chat assistant instance (shared state per server process)
+assistant = MedicinalPlantChatAssistant()
 
 
 def allowed_file(filename):
@@ -98,6 +102,67 @@ def plant_page(plant_name):
     }
 
     return render_template('plant_detail.html', **context)
+
+
+@app.route('/chat/init', methods=['POST'])
+def chat_init():
+    """Initialize plant context for chat assistant"""
+    data = request.get_json(silent=True) or {}
+    plant_name = data.get('plant_name')
+    if not plant_name:
+        return jsonify({'success': False, 'error': 'plant_name is required'}), 400
+
+    try:
+        chat_data = assistant.set_plant(plant_name)
+        return jsonify({
+            'success': True,
+            'plant': plant_name,
+            'summary': chat_data.get('summary'),
+            'suggestions': chat_data.get('suggestions', []),
+            'message': chat_data.get('message')
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 400
+
+
+@app.route('/chat')
+def chat_page():
+    """Render dedicated chat page for a plant"""
+    plant_name = request.args.get('plant_name', '').strip()
+    if not plant_name:
+        return jsonify({'error': 'plant_name query parameter is required'}), 400
+
+    if plant_name not in PLANT_CLASSES:
+        return jsonify({'error': f"Unknown plant '{plant_name}'"}), 404
+
+    plant_data = PLANT_CLASSES[plant_name]
+    return render_template(
+        'chat.html',
+        plant_name=plant_name,
+        scientific_name=plant_data.get('scientific_name', ''),
+        overview=plant_data.get('overview', ''),
+    )
+
+
+@app.route('/chat/message', methods=['POST'])
+def chat_message():
+    """Respond to follow-up question with context-aware assistant"""
+    data = request.get_json(silent=True) or {}
+    question = data.get('message')
+    if not question:
+        return jsonify({'success': False, 'error': 'message is required'}), 400
+
+    try:
+        response = assistant.answer_question(question)
+        return jsonify({
+            'success': True,
+            'plant': assistant.current_plant,
+            'answer': response.get('answer'),
+            'suggestions': response.get('suggestions', []),
+            'source': response.get('source', 'groq')
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 @app.route('/predict', methods=['POST'])

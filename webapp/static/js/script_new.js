@@ -162,32 +162,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Display all predictions
-        const predictionsList = document.getElementById('predictionsList');
-        predictionsList.innerHTML = '';
-        
-        Object.entries(data.all_predictions)
-            .sort((a, b) => b[1] - a[1])
-            .forEach(([plant, score]) => {
-                const percentage = (score * 100).toFixed(1);
-                const predictionItem = document.createElement('div');
-                predictionItem.className = 'prediction-item';
-                
-                predictionItem.innerHTML = `
-                    <span class="prediction-name">${plant}</span>
-                    <div class="prediction-bar">
-                        <div class="prediction-bar-fill" style="width: 0%"></div>
-                    </div>
-                    <span class="prediction-percent">${percentage}%</span>
-                `;
-                
-                predictionsList.appendChild(predictionItem);
-                
-                // Animate the prediction bar
-                setTimeout(() => {
-                    predictionItem.querySelector('.prediction-bar-fill').style.width = percentage + '%';
-                }, 200);
-            });
+        // Hide detailed all-predictions section (not requested)
+        const predictionsSection = document.querySelector('.all-predictions');
+        if (predictionsSection) {
+            predictionsSection.style.display = 'none';
+        }
 
         // Add "Know Medicinal Uses" button/link
         const knowContainer = document.getElementById('knowUsesContainer');
@@ -199,12 +178,20 @@ document.addEventListener('DOMContentLoaded', function() {
             a.className = 'btn btn-primary';
             a.textContent = 'Know More Medicinal Uses';
             knowContainer.appendChild(a);
+
+            const chatButton = document.getElementById('chatWithAIButton');
+            if (chatButton) {
+                chatButton.style.display = 'inline-block';
+                chatButton.onclick = () => {
+                    window.location.href = '/chat?plant_name=' + encodeURIComponent(plantName);
+                };
+            }
         }
 
         // Show results section
         resultsSection.style.display = 'block';
         errorSection.style.display = 'none';
-        
+
         // Scroll to results
         resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -229,4 +216,10 @@ function resetForm() {
     document.getElementById('resultsSection').style.display = 'none';
     document.getElementById('errorSection').style.display = 'none';
     document.getElementById('loadingSpinner').style.display = 'none';
+
+    const chatWithAIButton = document.getElementById('chatWithAIButton');
+    if (chatWithAIButton) {
+        chatWithAIButton.style.display = 'none';
+        chatWithAIButton.onclick = null;
+    }
 }
