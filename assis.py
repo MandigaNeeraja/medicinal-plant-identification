@@ -159,7 +159,8 @@ class MedicinalPlantChatAssistant:
         return [
             f"What are the main medicinal benefits of {plant_name}?",
             f"How should I prepare {plant_name} safely?",
-            f"Are there any known side effects or precautions for {plant_name}?"
+            f"Are there any known side effects or precautions for {plant_name}?",
+            f"which part of {plant_name} is used for medicine?"
         ]
 
     def answer_question(self, question: str):

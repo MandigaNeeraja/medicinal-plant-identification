@@ -25,7 +25,10 @@ _default_plant_classes = {
     'Aloevera': {
         'scientific_name': 'Aloe vera',
         'common_names': ['Aloe', 'Aloe barbadensis'],
-        'medicinal_uses': ['Skin burns and wounds', 'Digestive health', 'Anti-inflammatory'],
+        'medicinal_uses': ['Promotes healing of burns, cuts, and wounds',
+        'Soothes skin irritation, sunburn, and dryness',
+        'Supports digestive health and reduces acidity',
+        'Acts as a natural anti-inflammatory agent'],
         'overview': 'A succulent plant used topically for burns and as a traditional digestive aid.',
         'preparation': {
             'juice': 'Apply fresh inner gel topically or mix with water for sprays.',
@@ -41,7 +44,10 @@ _default_plant_classes = {
     'Amla': {
         'scientific_name': 'Phyllanthus emblica',
         'common_names': ['Indian Gooseberry'],
-        'medicinal_uses': ['Rich in Vitamin C', 'Antioxidant', 'Immunity booster'],
+        'medicinal_uses': ['Boosts immunity due to high Vitamin C content',
+        'Acts as a powerful antioxidant to reduce oxidative stress',
+        'Improves digestion and metabolism',
+        'Supports hair growth and enhances skin health'],
         'overview': 'Amla is a sour fruit prized in Ayurveda for its antioxidant and immune-supporting properties.',
         'preparation': {
             'juice': 'Fresh juice mixed with honey or water.',
@@ -57,7 +63,10 @@ _default_plant_classes = {
     'Amruthaballi': {
         'scientific_name': 'Tinospora cordifolia',
         'common_names': ['Giloy', 'Guduchi'],
-        'medicinal_uses': ['Immune modulation', 'Antipyretic', 'Liver tonic'],
+        'medicinal_uses': ['Enhances immunity and fights infections',
+        'Helps reduce fever and chronic illness symptoms',
+        'Supports liver detoxification and function',
+        'Acts as an anti-inflammatory and antioxidant'],
         'overview': 'A climbing shrub used in Ayurveda as an immunomodulator and fever reducer.',
         'preparation': {
             'juice': 'Stem extract or juice taken in small amounts.',
@@ -73,7 +82,10 @@ _default_plant_classes = {
     'Badipala': {
         'scientific_name': 'Ficus benghalensis (approx.)',
         'common_names': ['Badipala (local)'],
-        'medicinal_uses': ['Traditional remedy', 'Digestive aid'],
+        'medicinal_uses': ['Traditionally used for digestive issues and stomach discomfort',
+        'Helps in treating minor infections and inflammation',
+        'Used in folk medicine for wound healing',
+        'Supports overall gut health'],
         'overview': 'A traditionally used plant with folk remedies for digestion and minor ailments.',
         'preparation': {
             'juice': 'Fresh leaf juice used locally for digestive complaints.',
@@ -89,7 +101,10 @@ _default_plant_classes = {
     'Balloon_Vine': {
         'scientific_name': 'Cardiospermum halicacabum',
         'common_names': ['Balloon Vine', 'Love in a Puff'],
-        'medicinal_uses': ['Anti-inflammatory', 'Respiratory support'],
+        'medicinal_uses': ['Reduces joint pain and inflammation (arthritis relief)',
+        'Supports respiratory health and reduces cough',
+        'Used for skin diseases and itching',
+        'Acts as a natural anti-inflammatory agent'],
         'overview': 'A climbing plant used for joint inflammation and respiratory complaints in folk medicine.',
         'preparation': {
             'juice': 'Leaf juice applied topically for inflammation.',
@@ -105,7 +120,10 @@ _default_plant_classes = {
     'Bhrami': {
         'scientific_name': 'Bacopa monnieri',
         'common_names': ['Brahmi', 'Waterhyssop'],
-        'medicinal_uses': ['Memory enhancement', 'Cognitive improvement', 'Anxiety relief'],
+        'medicinal_uses': ['Enhances memory and cognitive function',
+        'Reduces anxiety, stress, and mental fatigue',
+        'Supports brain health and concentration',
+        'Acts as a natural nervine tonic'],
         'overview': 'A wetland herb used traditionally to support cognitive function and memory.',
         'preparation': {
             'juice': 'Fresh leaf extract taken in small quantities.',
@@ -121,7 +139,10 @@ _default_plant_classes = {
     'camphor': {
         'scientific_name': 'Cinnamomum camphora',
         'common_names': ['Camphor'],
-        'medicinal_uses': ['Topical analgesic', 'Antiseptic', 'Decongestant'],
+        'medicinal_uses': ['Provides relief from cough and nasal congestion',
+        'Acts as a topical pain reliever for muscle aches',
+        'Has antiseptic and antimicrobial properties',
+        'Used in steam inhalation for respiratory issues'],
         'overview': 'Camphor is a strong-smelling topical agent used primarily for topical relief and decongestion.',
         'preparation': {
             'juice': 'Not applicable; camphor used as oil or ointment.',
@@ -137,7 +158,10 @@ _default_plant_classes = {
     'Catharanthus': {
         'scientific_name': 'Catharanthus roseus',
         'common_names': ['Periwinkle', 'Vinca'],
-        'medicinal_uses': ['Medicinal alkaloids', 'Traditional uses'],
+        'medicinal_uses': ['Contains compounds used in cancer treatment (alkaloids)',
+        'Traditionally used for managing diabetes',
+        'Supports blood circulation and healing',
+        'Used in controlled medicinal formulations'],
         'overview': 'Periwinkle contains alkaloids that have been used in modern medicine; traditional uses vary.',
         'preparation': {
             'juice': 'Not commonly used as juice; extracts prepared in controlled settings.',
@@ -153,7 +177,10 @@ _default_plant_classes = {
     'Coffee': {
         'scientific_name': 'Coffea spp.',
         'common_names': ['Coffee'],
-        'medicinal_uses': ['Stimulant', 'Antioxidant'],
+        'medicinal_uses': ['Acts as a natural stimulant to increase alertness',
+        'Improves mental focus and cognitive performance',
+        'Contains antioxidants that protect cells',
+        'May support metabolism and fat burning'],
         'overview': 'Coffee beans are a widely used stimulant and source of antioxidants.',
         'preparation': {
             'juice': 'Not applicable; brewed beverage is the common preparation.',
@@ -169,7 +196,10 @@ _default_plant_classes = {
     'Curry': {
         'scientific_name': 'Murraya koenigii',
         'common_names': ['Curry leaf'],
-        'medicinal_uses': ['Antimicrobial', 'Digestive aid'],
+        'medicinal_uses': ['Improves digestion and reduces stomach discomfort',
+        'Helps control blood sugar levels',
+        'Supports hair growth and reduces hair fall',
+        'Acts as an antioxidant and antimicrobial agent'],
         'overview': 'Curry leaves are used in cooking and traditional remedies for digestion and metabolic health.',
         'preparation': {
             'juice': 'Fresh leaf extract used in small amounts.',
@@ -185,7 +215,10 @@ _default_plant_classes = {
     'Doddpathre': {
         'scientific_name': 'Acalypha indica (approx.)',
         'common_names': ['Doddpathre (local)'],
-        'medicinal_uses': ['Topical antiseptic', 'Skin care'],
+        'medicinal_uses': ['Used for treating skin infections and wounds',
+        'Acts as a natural antiseptic',
+        'Helps reduce inflammation and irritation',
+        'Used in traditional remedies for minor ailments'],
         'overview': 'A plant used in traditional topical skin remedies and minor wound care.',
         'preparation': {
             'juice': 'Leaf juice applied to skin for antiseptic effects.',
@@ -201,7 +234,10 @@ _default_plant_classes = {
     'Drumstick': {
         'scientific_name': 'Moringa oleifera',
         'common_names': ['Moringa', 'Drumstick tree'],
-        'medicinal_uses': ['Nutritional', 'Anti-inflammatory', 'Antioxidant'],
+        'medicinal_uses': ['Rich in nutrients and boosts overall health',
+        'Acts as an anti-inflammatory agent',
+        'Helps regulate blood sugar levels',
+        'Supports immunity and energy levels'],
         'overview': 'Moringa is a nutrient-dense tree whose leaves and pods are used for nutrition and traditional medicine.',
         'preparation': {
             'juice': 'Fresh leaf or pod extracts consumed as tonic.',
@@ -217,7 +253,10 @@ _default_plant_classes = {
     'Eucalyptus': {
         'scientific_name': 'Eucalyptus globulus',
         'common_names': ['Eucalyptus'],
-        'medicinal_uses': ['Respiratory decongestant', 'Antiseptic'],
+        'medicinal_uses': ['Relieves cough, cold, and nasal congestion',
+        'Used in steam inhalation for respiratory relief',
+        'Acts as an antiseptic for wounds and infections',
+        'Helps reduce muscle pain and inflammation'],
         'overview': 'Eucalyptus leaves are used in vapour and topical remedies for respiratory relief.',
         'preparation': {
             'juice': 'Leaf extracts used in diluted form for inhalation or topical rubs.',
@@ -233,7 +272,10 @@ _default_plant_classes = {
     'Ginger': {
         'scientific_name': 'Zingiber officinale',
         'common_names': ['Ginger'],
-        'medicinal_uses': ['Digestive aid', 'Anti-inflammatory', 'Nausea relief'],
+        'medicinal_uses': [ 'Relieves nausea and vomiting',
+        'Improves digestion and reduces bloating',
+        'Acts as a natural anti-inflammatory',
+        'Helps relieve cold, cough, and sore throat'],
         'overview': 'Ginger root is widely used to relieve nausea, support digestion, and reduce inflammation.',
         'preparation': {
             'juice': 'Fresh ginger juice in water, teas, or syrups.',
@@ -249,7 +291,10 @@ _default_plant_classes = {
     'Henna': {
         'scientific_name': 'Lawsonia inermis',
         'common_names': ['Henna'],
-        'medicinal_uses': ['Skin conditioning', 'Antifungal properties'],
+        'medicinal_uses': ['Conditions and cools the scalp and skin',
+        'Acts as an antifungal and antibacterial agent',
+        'Helps treat dandruff and scalp irritation',
+        'Used for wound healing and skin protection'],
         'overview': 'Henna leaves are traditionally used for hair and skin conditioning and as a dye.',
         'preparation': {
             'juice': 'Leaf paste or extract applied topically.',
@@ -265,7 +310,10 @@ _default_plant_classes = {
     'Mint': {
         'scientific_name': 'Mentha spp.',
         'common_names': ['Mint', 'Peppermint'],
-        'medicinal_uses': ['Digestive aid', 'Cooling', 'Respiratory relief'],
+        'medicinal_uses': ['Digestive aid', 'Relieves indigestion and stomach discomfort',
+        'Provides cooling effect and reduces body heat',
+        'Helps clear nasal congestion',
+        'Freshens breath and reduces nausea'],
         'overview': 'Mint leaves are used for digestive comfort, cooling, and mild respiratory relief.',
         'preparation': {
             'juice': 'Fresh leaf infusion or juice in teas.',
@@ -281,7 +329,10 @@ _default_plant_classes = {
     'Neem': {
         'scientific_name': 'Azadirachta indica',
         'common_names': ['Neem'],
-        'medicinal_uses': ['Skin health', 'Antibacterial properties', 'Immune boost'],
+        'medicinal_uses': ['Treats skin infections, acne, and wounds',
+        'Acts as a strong antibacterial and antifungal agent',
+        'Supports blood purification',
+        'Boosts immunity and detoxification'],
         'overview': 'Neem is used for skin conditions, as an antibacterial agent, and in traditional cleanses.',
         'preparation': {
             'juice': 'Leaf extract used topically or in small internal doses in traditional recipes.',
@@ -297,7 +348,10 @@ _default_plant_classes = {
     'Tulsi': {
         'scientific_name': 'Ocimum sanctum',
         'common_names': ['Holy Basil', 'Tulsi'],
-        'medicinal_uses': ['Cough and cold relief', 'Respiratory health', 'Stress reduction'],
+        'medicinal_uses': ['Relieves cough, cold, and respiratory problems',
+        'Reduces stress and improves mental health',
+        'Boosts immunity and fights infections',
+        'Acts as an anti-inflammatory and antioxidant'],
         'overview': 'Tulsi is a revered herb in Ayurveda used for respiratory support and stress relief.',
         'preparation': {
             'juice': 'Fresh leaf extract or tea prepared from leaves.',
@@ -313,7 +367,10 @@ _default_plant_classes = {
     'Turmeric': {
         'scientific_name': 'Curcuma longa',
         'common_names': ['Turmeric'],
-        'medicinal_uses': ['Anti-inflammatory', 'Antioxidant', 'Joint health'],
+        'medicinal_uses': ['Reduces inflammation and joint pain',
+        'Acts as a powerful antioxidant',
+        'Supports wound healing and skin health',
+        'Boosts immunity and improves digestion'],
         'overview': 'Turmeric root contains curcumin and is widely used for inflammation and general wellness.',
         'preparation': {
             'juice': 'Fresh root juice mixed with water or milk.',
