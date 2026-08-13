@@ -14,7 +14,6 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
 from config import PLANT_CLASSES, CONFIDENCE_THRESHOLD  # noqa: E402
-from src.predictor import PlantPredictor  # noqa: E402
 
 
 _predictor = None
@@ -23,6 +22,8 @@ _predictor = None
 def get_predictor():
     global _predictor
     if _predictor is None:
+        from src.predictor import PlantPredictor  # noqa: E402 — lazy import for Render startup
+
         model_dir = current_app.config['MODEL_DIR']
         _predictor = PlantPredictor(
             model_path=os.path.join(model_dir, 'best_model.h5'),

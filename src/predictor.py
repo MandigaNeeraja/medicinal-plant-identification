@@ -2,26 +2,20 @@
 Prediction utilities for the Medicinal Plant Identification model
 """
 
-import cv2
-import numpy as np
 import pickle
 import os
-from tensorflow import keras
+
 
 class PlantPredictor:
     """
     Class to handle plant identification predictions
     """
-    
+
     def __init__(self, model_path, label_encoder_path, preprocessing_params_path):
-        """
-        Initialize the predictor with model and preprocessing parameters
-        
-        Args:
-            model_path: Path to the trained model (.h5 file)
-            label_encoder_path: Path to the label encoder
-            preprocessing_params_path: Path to preprocessing parameters
-        """
+        import cv2  # noqa: F401 - loaded lazily for faster app startup
+        from tensorflow import keras
+
+        self._cv2 = cv2
         self.model = keras.models.load_model(model_path)
         self.label_encoder = pickle.load(open(label_encoder_path, 'rb'))
         self.preprocessing_params = pickle.load(open(preprocessing_params_path, 'rb'))
@@ -31,15 +25,9 @@ class PlantPredictor:
         self.NORMALIZATION = self.preprocessing_params['NORMALIZATION']
     
     def preprocess_image(self, image_path):
-        """
-        Preprocess an image for prediction
-        
-        Args:
-            image_path: Path to the input image
-            
-        Returns:
-            Preprocessed image array
-        """
+        import numpy as np
+
+        cv2 = self._cv2
         # Read image
         img = cv2.imread(image_path)
         if img is None:
@@ -60,22 +48,8 @@ class PlantPredictor:
         return img
     
     def predict(self, image_path, confidence_threshold=0.7, non_leaf_threshold=0.3):
-        """
-        Predict plant class from an image
-        
-        Args:
-            image_path: Path to the input image
-            confidence_threshold: Minimum confidence for prediction
-            non_leaf_threshold: Confidence below this indicates non-leaf image
-            
-        Returns:
-            Dictionary containing:
-                - 'plant': Predicted plant name (None when invalid)
-                - 'confidence': Prediction confidence (0-1)
-                - 'all_predictions': Probabilities for all classes
-                - 'success': Boolean indicating if prediction is above threshold
-                - 'message': Guidance message
-        """
+        import numpy as np
+
         try:
             # Preprocess image
             preprocessed_img = self.preprocess_image(image_path)
@@ -140,6 +114,8 @@ def load_model_artifacts(model_dir='../models'):
         Tuple of (model, label_encoder, preprocessing_params, model_info)
     """
     try:
+        from tensorflow import keras
+
         model = keras.models.load_model(os.path.join(model_dir, 'best_model.h5'))
         label_encoder = pickle.load(open(os.path.join(model_dir, 'label_encoder.pkl'), 'rb'))
         preprocessing_params = pickle.load(open(os.path.join(model_dir, 'preprocessing_params.pkl'), 'rb'))
