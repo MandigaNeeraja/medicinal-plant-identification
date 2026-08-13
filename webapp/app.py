@@ -38,7 +38,7 @@ try:
         label_encoder_path=os.path.join(model_dir, 'label_encoder.pkl'),
         preprocessing_params_path=os.path.join(model_dir, 'preprocessing_params.pkl')
     )
-    print(f"✓ Model loaded successfully from {model_dir}!")
+    print(f"[OK] Model loaded successfully from {model_dir}!")
 except Exception as e:
     print(f"Error loading model: {e}")
     import traceback
@@ -81,7 +81,7 @@ def predict():
     
     if predictor is None:
         error_msg = 'Model not loaded. Please restart the application.'
-        print(f"❌ Error: {error_msg}")
+        print(f"[ERROR] {error_msg}")
         return jsonify({'success': False, 'error': error_msg}), 500
     
     # Debug: Print request info
@@ -92,7 +92,7 @@ def predict():
     # Check if file is present
     if 'file' not in request.files:
         error_msg = 'No file provided in request'
-        print(f"❌ Error: {error_msg}")
+        print(f"[ERROR] {error_msg}")
         print(f"Available keys: {list(request.files.keys())}")
         return jsonify({'success': False, 'error': error_msg}), 400
     
@@ -102,12 +102,12 @@ def predict():
     
     if file.filename == '':
         error_msg = 'No file selected'
-        print(f"❌ Error: {error_msg}")
+        print(f"[ERROR] {error_msg}")
         return jsonify({'success': False, 'error': error_msg}), 400
     
     if not allowed_file(file.filename):
         error_msg = f'File type not allowed. Allowed types: {", ".join(ALLOWED_EXTENSIONS)}'
-        print(f"❌ Error: {error_msg}")
+        print(f"[ERROR] {error_msg}")
         return jsonify({'success': False, 'error': error_msg}), 400
     
     try:
@@ -116,37 +116,37 @@ def predict():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         print(f"Saving file to: {filepath}")
         file.save(filepath)
-        print(f"✓ File saved successfully")
+        print("[OK] File saved successfully")
         
         # Verify file exists
         if not os.path.exists(filepath):
             raise Exception(f"File was not saved properly to {filepath}")
         
         file_size = os.path.getsize(filepath)
-        print(f"✓ File size: {file_size} bytes")
+        print(f"[OK] File size: {file_size} bytes")
         
         # Make prediction
         print("Making prediction...")
         result = predictor.predict(filepath, confidence_threshold=CONFIDENCE_THRESHOLD)
-        print(f"✓ Prediction result: {result['plant']} ({result['confidence']:.2%})")
+        print(f"[OK] Prediction result: {result['plant']} ({result['confidence']:.2%})")
         
         # Get plant information if prediction is successful
         if result['success'] and result['plant'] in PLANT_CLASSES:
             plant_info_data = PLANT_CLASSES[result['plant']]
             result['medicinal_uses'] = plant_info_data['medicinal_uses']
-            print(f"✓ Plant info added")
+            print("[OK] Plant info added")
         
         # Add file path for display
         result['image_path'] = f'/uploads/{filename}'
-        print(f"✓ Image path: {result['image_path']}")
+        print(f"[OK] Image path: {result['image_path']}")
         
-        print("✓ Prediction completed successfully!")
+        print("[OK] Prediction completed successfully!")
         print("="*70)
         return jsonify(result)
     
     except Exception as e:
         error_msg = f'Error during prediction: {str(e)}'
-        print(f"❌ Exception: {error_msg}")
+        print(f"[ERROR] Exception: {error_msg}")
         import traceback
         traceback.print_exc()
         print("="*70)
