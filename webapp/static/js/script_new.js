@@ -31,13 +31,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function highlight(e) {
-        fileInputWrapper.style.borderColor = '#764ba2';
-        fileInputWrapper.style.background = '#f0f1ff';
+        const label = fileInputWrapper.querySelector('label');
+        label.style.borderColor = 'rgba(138, 43, 226, 0.8)';
+        label.style.background = 'rgba(138, 43, 226, 0.05)';
+        label.style.transform = 'scale(1.01)';
     }
 
     function unhighlight(e) {
-        fileInputWrapper.style.borderColor = '#667eea';
-        fileInputWrapper.style.background = '#f8f9ff';
+        const label = fileInputWrapper.querySelector('label');
+        label.style.borderColor = 'rgba(138, 43, 226, 0.3)';
+        label.style.background = 'rgba(255, 255, 255, 0.02)';
+        label.style.transform = 'scale(1)';
     }
 
     // Handle dropped files
@@ -131,49 +135,63 @@ document.addEventListener('DOMContentLoaded', function() {
         // Display plant name
         document.getElementById('plantName').textContent = data.plant;
 
-        // Display confidence
+        // Display confidence with animation
         const confidence = data.confidence * 100;
         const confidenceBar = document.getElementById('confidenceBar');
         const confidencePercent = document.getElementById('confidencePercent');
         
-        confidenceBar.style.width = confidence + '%';
-        confidencePercent.textContent = confidence.toFixed(1) + '%';
+        // Reset width first for animation
+        confidenceBar.style.width = '0%';
+        confidencePercent.textContent = '0%';
+        
+        // Animate after a short delay
+        setTimeout(() => {
+            confidenceBar.style.width = confidence + '%';
+            confidencePercent.textContent = confidence.toFixed(1) + '%';
+        }, 100);
 
-        // Display medicinal uses
-        if (data.medicinal_uses) {
-            const usesList = document.getElementById('useslist');
-            usesList.innerHTML = '';
+        // Display medicinal uses as pill tags
+        const usesContainer = document.getElementById('usesContainer');
+        usesContainer.innerHTML = '';
+        if (data.medicinal_uses && data.medicinal_uses.length > 0) {
             data.medicinal_uses.forEach(use => {
-                const li = document.createElement('li');
-                li.textContent = use;
-                usesList.appendChild(li);
+                const useTag = document.createElement('span');
+                useTag.className = 'use-tag';
+                useTag.textContent = use;
+                usesContainer.appendChild(useTag);
             });
         }
 
-        // Display all predictions
-        const predictionsList = document.getElementById('predictionsList');
-        predictionsList.innerHTML = '';
-        
-        Object.entries(data.all_predictions)
-            .sort((a, b) => b[1] - a[1])
-            .forEach(([plant, score]) => {
-                const percentage = (score * 100).toFixed(1);
-                const predictionHTML = `
-                    <div class="prediction-item">
-                        <span class="prediction-name">${plant}</span>
-                        <div class="prediction-bar">
-                            <div class="prediction-bar-fill" style="width: ${percentage}%"></div>
-                        </div>
-                        <span class="percent">${percentage}%</span>
-                    </div>
-                `;
-                predictionsList.innerHTML += predictionHTML;
-            });
+        // Hide detailed all-predictions section (not requested)
+        const predictionsSection = document.querySelector('.all-predictions');
+        if (predictionsSection) {
+            predictionsSection.style.display = 'none';
+        }
+
+        // Add "Know Medicinal Uses" button/link
+        const knowContainer = document.getElementById('knowUsesContainer');
+        knowContainer.innerHTML = '';
+        const plantName = data.plant;
+        if (plantName) {
+            const a = document.createElement('a');
+            a.href = '/plant/' + encodeURIComponent(plantName);
+            a.className = 'btn btn-primary';
+            a.textContent = 'Know More Medicinal Uses';
+            knowContainer.appendChild(a);
+
+            const chatButton = document.getElementById('chatWithAIButton');
+            if (chatButton) {
+                chatButton.style.display = 'inline-block';
+                chatButton.onclick = () => {
+                    window.location.href = '/chat?plant_name=' + encodeURIComponent(plantName);
+                };
+            }
+        }
 
         // Show results section
         resultsSection.style.display = 'block';
         errorSection.style.display = 'none';
-        
+
         // Scroll to results
         resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -198,4 +216,10 @@ function resetForm() {
     document.getElementById('resultsSection').style.display = 'none';
     document.getElementById('errorSection').style.display = 'none';
     document.getElementById('loadingSpinner').style.display = 'none';
+
+    const chatWithAIButton = document.getElementById('chatWithAIButton');
+    if (chatWithAIButton) {
+        chatWithAIButton.style.display = 'none';
+        chatWithAIButton.onclick = null;
+    }
 }

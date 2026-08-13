@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ plant_name }} — Medicinal Uses</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/plant_detail_styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="navbar-brand">
+                <h1>🌿 AI Plant Identifier</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">{{ plant_name }}</h1>
+            {% if scientific_name %}
+            <p class="hero-subtitle">Scientific name: <em>{{ scientific_name }}</em></p>
+            {% endif %}
+            <button class="hero-btn btn-primary" onclick="history.back()">← Back to Prediction</button>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- Plant Information -->
+        <section class="plant-info-section">
+            <div class="info-grid">
+                <!-- Overview -->
+                <div class="info-card">
+                    <h2>Overview</h2>
+                    <p>{{ overview }}</p>
+                </div>
+
+                <!-- Medicinal Benefits -->
+                <div class="info-card">
+                    <h2>Medicinal Benefits</h2>
+                    <div class="benefits-list">
+                        {% for use in medicinal_uses %}
+                        <div class="benefit-item">
+                            <span class="benefit-icon">🌿</span>
+                            <span>{{ use }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Preparation Methods -->
+                <div class="info-card">
+                    <h2>How to Use / Preparation</h2>
+                    <div class="preparation-methods">
+                        <div class="method-item">
+                            <h3>Juice</h3>
+                            <p>{{ preparation.juice }}</p>
+                        </div>
+                        <div class="method-item">
+                            <h3>Powder</h3>
+                            <p>{{ preparation.powder }}</p>
+                        </div>
+                        <div class="method-item">
+                            <h3>Decoction</h3>
+                            <p>{{ preparation.decoction }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dosage & Safety -->
+                <div class="info-card">
+                    <h2>Dosage Tips</h2>
+                    <p>{{ dosage }}</p>
+                </div>
+
+                <div class="info-card">
+                    <h2>Safety & Precautions</h2>
+                    <p>{{ safety }}</p>
+                </div>
+
+                <!-- Usage Information -->
+                <div class="info-card">
+                    <h2>Best Time to Consume</h2>
+                    <p>{{ best_time }}</p>
+                </div>
+
+                <div class="info-card">
+                    <h2>Did You Know?</h2>
+                    <p>{{ did_you_know }}</p>
+                </div>
+
+                {% if common_names %}
+                <div class="info-card">
+                    <h2>Common Names</h2>
+                    <div class="common-names">
+                        {% for name in common_names %}
+                        <span class="name-tag">{{ name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Medicinal Plant Identification Project | BTech CSE-AIML</p>
+    </footer>
+
+</body>
+</html>

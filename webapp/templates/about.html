@@ -8,7 +8,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="container">
+        <div class="nav-container">
             <div class="navbar-brand">
                 <h1>🌿 Medicinal Plant Identifier</h1>
             </div>
@@ -19,81 +19,89 @@
         </div>
     </nav>
 
-    <div class="container">
-        <section style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 20px; padding: 40px; margin: 30px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1);">
-            <h2 style="background: linear-gradient(45deg, #8a2be2, #4b0082, #00bfff); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px; text-shadow: 0 0 20px rgba(138, 43, 226, 0.5); font-weight: 700;">About This Project</h2>
+    <!-- hero for about page -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">About This Project</h1>
+            <p class="hero-subtitle">Discover how our AI identifies medicinal plants and why it matters.</p>
+        </div>
+    </section>
+
+    <main class="main-content about-page">
+        <section class="about-section">
+            <h2 class="section-title">About This Project</h2>
             
-            <div style="line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
-                <h3 style="background: linear-gradient(45deg, #8a2be2, #4b0082); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; text-shadow: 0 0 15px rgba(138, 43, 226, 0.5); font-weight: 600;">🎯 Project Overview</h3>
-                <p style="color: rgba(255, 255, 255, 0.8);">
+            <div class="about-content">
+                <h3>🎯 Project Overview</h3>
+                <p>
                     This is a BTech Final Year Project for CSE-AIML students. The project aims to build an intelligent 
                     system that can identify medicinal plants from leaf images using deep learning techniques and provide 
                     information about their medicinal uses.
                 </p>
 
-                <h3 style="background: linear-gradient(45deg, #8a2be2, #4b0082); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; text-shadow: 0 0 15px rgba(138, 43, 226, 0.5); font-weight: 600;">🔬 Technical Details</h3>
-                <ul style="padding-left: 20px; color: rgba(255, 255, 255, 0.8);">
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Model Architecture:</strong> MobileNetV2 with Transfer Learning</li>
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Framework:</strong> TensorFlow/Keras</li>
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Training Data:</strong> ~500-1000 leaf images per plant species</li>
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Input Size:</strong> 224×224 RGB images</li>
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Plant Classes:</strong> Aloevera, Bhrami, Neem, Tulsi, Turmeric</li>
+                <h3>🔬 Technical Details</h3>
+                <ul>
+                    <li><strong>Model Architecture:</strong> MobileNetV2 with Transfer Learning</li>
+                    <li><strong>Framework:</strong> TensorFlow/Keras</li>
+                    <li><strong>Training Data:</strong> ~500-1000 leaf images per plant species</li>
+                    <li><strong>Input Size:</strong> 224×224 RGB images</li>
+                    <li><strong>Plant Classes:</strong> Aloevera, Bhrami, Neem, Tulsi, Turmeric</li>
                 </ul>
 
-                <h3 style="background: linear-gradient(45deg, #8a2be2, #4b0082); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; text-shadow: 0 0 15px rgba(138, 43, 226, 0.5); font-weight: 600;">🌱 Supported Medicinal Plants</h3>
-                <ul style="padding-left: 20px; color: rgba(255, 255, 255, 0.8);">
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Aloevera:</strong> Skin burns, wounds, digestive health</li>
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Bhrami:</strong> Memory enhancement, cognitive improvement</li>
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Neem:</strong> Skin health, antibacterial properties</li>
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Tulsi:</strong> Cough relief, respiratory health</li>
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Turmeric:</strong> Anti-inflammatory, antioxidant properties</li>
+                <h3>🌱 Supported Medicinal Plants</h3>
+                <ul>
+                    <li><strong>Aloevera:</strong> Skin burns, wounds, digestive health</li>
+                    <li><strong>Bhrami:</strong> Memory enhancement, cognitive improvement</li>
+                    <li><strong>Neem:</strong> Skin health, antibacterial properties</li>
+                    <li><strong>Tulsi:</strong> Cough relief, respiratory health</li>
+                    <li><strong>Turmeric:</strong> Anti-inflammatory, antioxidant properties</li>
                 </ul>
 
-                <h3 style="background: linear-gradient(45deg, #8a2be2, #4b0082); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; text-shadow: 0 0 15px rgba(138, 43, 226, 0.5); font-weight: 600;">💻 Technology Stack</h3>
-                <ul style="padding-left: 20px; color: rgba(255, 255, 255, 0.8);">
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Backend:</strong> Flask, Python</li>
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Machine Learning:</strong> TensorFlow, Keras, scikit-learn</li>
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Frontend:</strong> HTML5, CSS3, JavaScript</li>
-                    <li><strong style="color: rgba(255, 255, 255, 0.9);">Data Processing:</strong> NumPy, Pandas, OpenCV</li>
+                <h3>💻 Technology Stack</h3>
+                <ul>
+                    <li><strong>Backend:</strong> Flask, Python</li>
+                    <li><strong>Machine Learning:</strong> TensorFlow, Keras, scikit-learn</li>
+                    <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript</li>
+                    <li><strong>Data Processing:</strong> NumPy, Pandas, OpenCV</li>
                 </ul>
 
-                <h3 style="background: linear-gradient(45deg, #8a2be2, #4b0082); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; text-shadow: 0 0 15px rgba(138, 43, 226, 0.5); font-weight: 600;">📊 Model Performance</h3>
-                <p style="color: rgba(255, 255, 255, 0.8);">
+                <h3>📊 Model Performance</h3>
+                <p>
                     The model achieves high accuracy in identifying medicinal plants from leaf images. 
                     The system uses confidence thresholds to ensure reliable predictions and can fall back to 
                     showing all predictions if confidence is low.
                 </p>
 
-                <h3 style="background: linear-gradient(45deg, #8a2be2, #4b0082); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; text-shadow: 0 0 15px rgba(138, 43, 226, 0.5); font-weight: 600;">🚀 How to Use</h3>
-                <ol style="padding-left: 20px; color: rgba(255, 255, 255, 0.8);">
+                <h3>🚀 How to Use</h3>
+                <ol>
                     <li>Upload a clear image of a plant leaf</li>
                     <li>The system will analyze the leaf characteristics</li>
                     <li>View the identified plant name and confidence level</li>
                     <li>Learn about the medicinal uses and health benefits</li>
                 </ol>
 
-                <h3 style="background: linear-gradient(45deg, #8a2be2, #4b0082); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; text-shadow: 0 0 15px rgba(138, 43, 226, 0.5); font-weight: 600;">⚠️ Disclaimer</h3>
-                <p style="color: rgba(255, 255, 255, 0.8);">
+                <h3>⚠️ Disclaimer</h3>
+                <p>
                     This tool is for educational and informational purposes only. The predictions are based on 
                     machine learning models and may not always be 100% accurate. Always consult with healthcare 
                     professionals before using any medicinal plant for health purposes.
                 </p>
 
-                <h3 style="background: linear-gradient(45deg, #8a2be2, #4b0082); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; text-shadow: 0 0 15px rgba(138, 43, 226, 0.5); font-weight: 600;">📚 References</h3>
-                <ul style="padding-left: 20px; color: rgba(255, 255, 255, 0.8);">
+                <h3>📚 References</h3>
+                <ul>
                     <li>MobileNetV2 Paper: https://arxiv.org/abs/1801.04381</li>
                     <li>Transfer Learning in Deep Learning</li>
                     <li>Traditional Medicinal Plants Documentation</li>
                 </ul>
             </div>
 
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="/" style="display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #8a2be2 0%, #4b0082 50%, #00bfff 100%); color: white; text-decoration: none; border-radius: 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3); transition: all 0.4s ease; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);">
+            <div class="back-button-container">
+                <a href="/" class="back-button">
                     Back to Home
                 </a>
             </div>
         </section>
-    </div>
+    </main>
 
     <footer class="footer">
         <p>&copy; 2026 Medicinal Plant Identification Project | BTech CSE-AIML</p>

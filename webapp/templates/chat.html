@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chat about {{ plant_name }} | Medicinal Plant Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="navbar-brand">
+                <h1>🌿 AI Plant Chat</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content" style="padding-top: 100px;">
+        <section class="chat-page-section">
+            <div class="chat-page-top">
+                <div class="plant-overview-card">
+                    <h2>{{ plant_name }}</h2>
+                    {% if scientific_name %}<p><strong>Scientific:</strong> {{ scientific_name }}</p>{% endif %}
+                    {% if overview %}<p>{{ overview }}</p>{% endif %}
+                </div>
+                <a class="btn btn-secondary" href="/">← Back to Home</a>
+            </div>
+
+            <!-- Chat UI -->
+            <div class="chat-widget">
+                <div id="chatMessages" class="chat-messages"></div>
+                <div id="chatSuggestions" class="chat-suggestions"></div>
+                <div class="chat-input-wrap">
+                    <input id="chatInput" type="text" placeholder="Ask about the plant..." autocomplete="off">
+                    <button id="chatSendBtn" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Medicinal Plant Identification Project | BTech CSE-AIML</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>

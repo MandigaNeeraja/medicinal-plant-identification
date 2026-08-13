@@ -59,20 +59,22 @@ class PlantPredictor:
         
         return img
     
-    def predict(self, image_path, confidence_threshold=0.7):
+    def predict(self, image_path, confidence_threshold=0.7, non_leaf_threshold=0.3):
         """
         Predict plant class from an image
         
         Args:
             image_path: Path to the input image
             confidence_threshold: Minimum confidence for prediction
+            non_leaf_threshold: Confidence below this indicates non-leaf image
             
         Returns:
             Dictionary containing:
-                - 'plant': Predicted plant name
+                - 'plant': Predicted plant name (None when invalid)
                 - 'confidence': Prediction confidence (0-1)
                 - 'all_predictions': Probabilities for all classes
                 - 'success': Boolean indicating if prediction is above threshold
+                - 'message': Guidance message
         """
         try:
             # Preprocess image
@@ -87,21 +89,33 @@ class PlantPredictor:
             predicted_class = self.label_encoder.classes_[predicted_class_idx]
             confidence = float(confidence_scores[predicted_class_idx])
             
-            # Check if confidence meets threshold
-            success = confidence >= confidence_threshold
-            
+            # Determine prediction status
+            if confidence >= confidence_threshold:
+                status = 'success'
+                success = True
+                message = 'Prediction successful'
+            elif confidence >= non_leaf_threshold:
+                status = 'low_confidence'
+                success = False
+                message = 'Please upload valid leaf image.'
+            else:
+                status = 'non_leaf'
+                success = False
+                message = 'Please upload valid leaf image.'
+
             # Create all predictions dictionary
             all_predictions = {
                 self.label_encoder.classes_[i]: float(confidence_scores[i])
                 for i in range(len(self.label_encoder.classes_))
             }
-            
+
             return {
-                'plant': predicted_class,
+                'plant': predicted_class if success else None,
                 'confidence': confidence,
                 'all_predictions': all_predictions,
                 'success': success,
-                'message': 'Prediction successful' if success else f'Confidence ({confidence:.2%}) below threshold ({confidence_threshold:.0%})'
+                'status': status,
+                'message': message
             }
         
         except Exception as e:
@@ -110,6 +124,7 @@ class PlantPredictor:
                 'confidence': 0.0,
                 'all_predictions': {},
                 'success': False,
+                'status': 'error',
                 'message': f'Error during prediction: {str(e)}'
             }
 

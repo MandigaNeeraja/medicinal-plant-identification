@@ -8,7 +8,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="container">
+        <div class="nav-container">
             <div class="navbar-brand">
                 <h1>🌿 Medicinal Plant Identifier</h1>
             </div>
@@ -19,15 +19,20 @@
         </div>
     </nav>
 
-    <div class="container">
-        <section class="hero">
-            <h2>Identify Medicinal Plants from Leaf Images</h2>
-            <p>Upload a leaf image to discover the plant species and its medicinal uses</p>
-        </section>
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Medicinal Plant Identification</h1>
+            <p class="hero-subtitle">Discover the healing power of nature with AI-powered plant recognition</p>
+            <button class="hero-btn btn-primary" onclick="document.getElementById('fileInput').click()">Upload Plant Image</button>
+        </div>
+    </section>
 
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
         <!-- Upload Section -->
-        <section class="upload-section">
-            <div class="upload-box">
+        <section class="upload-section" id="uploadSection">
+            <div class="upload-area">
                 <form id="uploadForm" enctype="multipart/form-data">
                     <div class="file-input-wrapper">
                         <input type="file" id="fileInput" name="file" accept="image/*" required>
@@ -42,8 +47,8 @@
 
         <!-- Preview Section (shown after selecting image) -->
         <section id="previewSection" class="preview-section" style="display: none;">
-            <div class="preview-container">
-                <div class="preview-image-box">
+            <div class="preview-content">
+                <div class="preview-image">
                     <img id="previewImage" src="" alt="Selected image preview">
                 </div>
                 <div class="preview-actions">
@@ -61,46 +66,46 @@
 
         <!-- Results Section -->
         <section id="resultsSection" class="results-section" style="display: none;">
-            <div class="results-container">
-                <div class="image-container">
-                    <img id="uploadedImage" src="" alt="Uploaded leaf image">
+            <div class="results-layout">
+                <!-- Left Column: Image Preview -->
+                <div class="results-left">
+                    <div class="image-preview">
+                        <img id="uploadedImage" src="" alt="Uploaded leaf image">
+                    </div>
                 </div>
-                
-                <div class="info-container">
-                    <h3>Prediction Result</h3>
-                    
-                    <div class="result-box" id="resultBox">
-                        <h4 id="plantName"></h4>
-                        <div class="confidence">
-                            <span class="label">Confidence:</span>
-                            <div class="confidence-bar">
-                                <div id="confidenceBar" class="confidence-fill"></div>
+
+                <!-- Right Column: Prediction Results -->
+                <div class="results-right">
+                    <div class="prediction-result">
+                        <h2 id="plantName" class="plant-name"></h2>
+                        <div class="confidence-section">
+                            <div class="confidence-bar-container">
+                                <div id="confidenceBar" class="confidence-bar-fill"></div>
                             </div>
-                            <span id="confidencePercent" class="percent">0%</span>
+                            <span id="confidencePercent" class="confidence-percent">0%</span>
                         </div>
                     </div>
 
-                    <div class="uses-box" id="usesBox">
-                        <h5>Medicinal Uses:</h5>
-                        <ul id="useslist">
-                            <li>Loading...</li>
-                        </ul>
+                    <div class="medicinal-uses">
+                        <h3>Medicinal Uses</h3>
+                        <div id="usesContainer" class="uses-tags">
+                            <!-- Uses will be populated here -->
+                        </div>
                     </div>
 
-                    <div class="all-predictions">
-                        <h5>All Plant Predictions:</h5>
-                        <div id="predictionsList"></div>
-                    </div>
+                    <!-- removed all-predictions as per updated requirement -->
+                    <div id="knowUsesContainer" class="know-uses-container"></div>
 
-                    <button class="btn btn-secondary" onclick="resetForm()">Identify Another Plant</button>
+                    <button id="chatWithAIButton" class="btn btn-primary" style="display: none; margin-bottom: 0.75rem;" type="button">💬 Chat with AI about this plant</button>
+                    <button class="btn btn-secondary reset-btn" onclick="resetForm()">Identify Another Plant</button>
                 </div>
             </div>
         </section>
 
         <!-- Error Section -->
         <section id="errorSection" class="error-section" style="display: none;">
-            <div class="alert alert-error">
-                <h4>Error</h4>
+            <div class="error-content">
+                <h3>Error</h3>
                 <p id="errorMessage"></p>
                 <button class="btn btn-secondary" onclick="resetForm()">Try Again</button>
             </div>
@@ -108,17 +113,17 @@
 
         <!-- Supported Plants Section -->
         <section class="plants-section">
-            <h3>Supported Plant Species</h3>
+            <h2>Supported Plant Species</h2>
             <div class="plants-grid">
                 {% for plant in plants %}
                 <div class="plant-card">
-                    <h5>{{ plant }}</h5>
+                    <h4>{{ plant }}</h4>
                     <p class="plant-icon">🌱</p>
                 </div>
                 {% endfor %}
             </div>
         </section>
-    </div>
+    </main>
 
     <footer class="footer">
         <p>&copy; 2026 Medicinal Plant Identification Project | BTech CSE-AIML</p>
