@@ -15,8 +15,16 @@ def create_app(config_name=None):
     if config_name is None:
         config_name = os.getenv('FLASK_ENV', 'development')
 
+    load_dotenv(os.path.join(PROJECT_ROOT, '.env'), override=True)
+
     app = Flask(__name__)
     app.config.from_object(config[config_name])
+
+    # Refresh env-backed settings (Config class may have been imported before .env existed)
+    app.config['GOOGLE_CLIENT_ID'] = os.getenv('GOOGLE_CLIENT_ID', '')
+    app.config['GOOGLE_CLIENT_SECRET'] = os.getenv('GOOGLE_CLIENT_SECRET', '')
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', app.config['SECRET_KEY'])
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', app.config['JWT_SECRET_KEY'])
 
     os.makedirs(os.path.join(PROJECT_ROOT, 'instance'), exist_ok=True)
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)

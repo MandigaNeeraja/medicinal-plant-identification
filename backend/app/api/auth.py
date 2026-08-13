@@ -1,3 +1,7 @@
+import os
+import urllib3
+import requests
+
 from flask import Blueprint, current_app, redirect, request
 from flask_jwt_extended import (
     create_access_token,
@@ -19,13 +23,60 @@ oauth = OAuth()
 def init_oauth(app):
     oauth.init_app(app)
     if AuthService.google_oauth_enabled(app.config):
+        verify_ssl = os.getenv('OAUTH_SSL_VERIFY', 'true').lower() == 'true'
+        if not verify_ssl:
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
         oauth.register(
             name='google',
             client_id=app.config['GOOGLE_CLIENT_ID'],
             client_secret=app.config['GOOGLE_CLIENT_SECRET'],
-            server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+            access_token_url='https://oauth2.googleapis.com/token',
+            authorize_url='https://accounts.google.com/o/oauth2/v2/auth',
+            api_base_url='https://openidconnect.googleapis.com/v1/',
             client_kwargs={'scope': 'openid email profile'},
         )
+
+        # Corporate networks may use SSL inspection with self-signed certs
+        if hasattr(oauth.google, 'session'):
+            oauth.google.session.verify = verify_ssl
+
+
+def _oauth_ssl_verify():
+    return os.getenv('OAUTH_SSL_VERIFY', 'true').lower() == 'true'
+
+
+def _fetch_google_profile(code):
+    verify = _oauth_ssl_verify()
+    redirect_uri = current_app.config['GOOGLE_REDIRECT_URI']
+
+    token_resp = requests.post(
+        'https://oauth2.googleapis.com/token',
+        data={
+            'code': code,
+            'client_id': current_app.config['GOOGLE_CLIENT_ID'],
+            'client_secret': current_app.config['GOOGLE_CLIENT_SECRET'],
+            'redirect_uri': redirect_uri,
+            'grant_type': 'authorization_code',
+        },
+        timeout=30,
+        verify=verify,
+    )
+    token_resp.raise_for_status()
+    token_data = token_resp.json()
+
+    access_token = token_data.get('access_token')
+    if not access_token:
+        raise ValueError('Google did not return an access token')
+
+    user_resp = requests.get(
+        'https://openidconnect.googleapis.com/v1/userinfo',
+        headers={'Authorization': f'Bearer {access_token}'},
+        timeout=30,
+        verify=verify,
+    )
+    user_resp.raise_for_status()
+    return user_resp.json()
 
 
 @auth_bp.route('/register', methods=['POST'])
@@ -108,6 +159,11 @@ def update_profile():
         return error_response(str(exc), 400)
 
 
+@auth_bp.route('/google/enabled', methods=['GET'])
+def google_enabled():
+    return success_response({'enabled': AuthService.google_oauth_enabled()})
+
+
 @auth_bp.route('/google/login', methods=['GET'])
 def google_login():
     if not AuthService.google_oauth_enabled():
@@ -122,12 +178,24 @@ def google_callback():
     if not AuthService.google_oauth_enabled():
         return error_response('Google OAuth is not configured', 503)
 
-    token = oauth.google.authorize_access_token()
-    profile = token.get('userinfo')
-    if not profile:
-        return error_response('Failed to fetch Google profile', 400)
+    oauth_error = request.args.get('error')
+    if oauth_error:
+        return error_response(f'Google sign-in cancelled: {oauth_error}', 400)
 
-    user = AuthService.upsert_google_user(profile)
+    code = request.args.get('code')
+    if not code:
+        return error_response('Missing authorization code from Google', 400)
+
+    try:
+        profile = _fetch_google_profile(code)
+    except Exception as exc:
+        return error_response(f'Google sign-in failed: {exc}', 400)
+
+    try:
+        user = AuthService.upsert_google_user(profile)
+    except ValueError as exc:
+        return error_response(str(exc), 400)
+
     tokens = AuthService.create_tokens(user)
 
     frontend_url = current_app.config['FRONTEND_URL'].rstrip('/')

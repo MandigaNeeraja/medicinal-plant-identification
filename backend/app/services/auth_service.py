@@ -1,6 +1,7 @@
 import re
 from datetime import datetime, timezone
 
+import os
 from flask_jwt_extended import create_access_token, create_refresh_token
 
 from backend.app.extensions import bcrypt, db
@@ -117,7 +118,6 @@ class AuthService:
         else:
             from flask import current_app
             config = current_app.config
-        return bool(
-            config.get('GOOGLE_CLIENT_ID')
-            and config.get('GOOGLE_CLIENT_SECRET')
-        )
+        client_id = config.get('GOOGLE_CLIENT_ID') or os.getenv('GOOGLE_CLIENT_ID', '')
+        client_secret = config.get('GOOGLE_CLIENT_SECRET') or os.getenv('GOOGLE_CLIENT_SECRET', '')
+        return bool(client_id and client_secret)

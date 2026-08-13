@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import api from '../api/client';
+import GoogleSignInButton from '../components/GoogleSignInButton';
 import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
@@ -9,6 +11,13 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [googleEnabled, setGoogleEnabled] = useState(false);
+
+  useEffect(() => {
+    api.get('/auth/google/enabled')
+      .then((res) => setGoogleEnabled(Boolean(res.data.data?.enabled)))
+      .catch(() => setGoogleEnabled(false));
+  }, []);
 
   if (!loading && user) {
     return <Navigate to="/dashboard" replace />;
@@ -34,6 +43,14 @@ export default function Login() {
         <h1 className="mb-2 text-3xl font-bold gradient-text">Welcome back</h1>
         <p className="mb-8 text-white/60">Sign in to identify medicinal plants with AI.</p>
 
+        <GoogleSignInButton disabled={!googleEnabled} />
+
+        <div className="my-6 flex items-center gap-3 text-sm text-white/40">
+          <div className="h-px flex-1 bg-white/10" />
+          or sign in with email
+          <div className="h-px flex-1 bg-white/10" />
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
@@ -56,15 +73,11 @@ export default function Login() {
           </button>
         </form>
 
-        <div className="my-6 flex items-center gap-3 text-sm text-white/40">
-          <div className="h-px flex-1 bg-white/10" />
-          or
-          <div className="h-px flex-1 bg-white/10" />
-        </div>
-
-        <a href={`${import.meta.env.VITE_API_URL || ''}/api/auth/google/login`} className="btn-secondary w-full text-center">
-          Continue with Google
-        </a>
+        {!googleEnabled && (
+          <p className="mt-4 text-center text-xs text-white/45">
+            To enable Google sign-in, add credentials to `.env` — see `docs/GOOGLE_OAUTH_SETUP.md`
+          </p>
+        )}
 
         <p className="mt-6 text-center text-sm text-white/60">
           No account?{' '}
