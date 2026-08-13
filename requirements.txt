@@ -8,3 +8,6 @@ seaborn>=0.13.0
 flask>=3.0.0
 Pillow>=10.1.0
 requests>=2.31.0
+langchain>=1.0.0
+langchain-groq>=1.0.0
+python-dotenv>=1.0.0

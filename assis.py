@@ -3,8 +3,8 @@ from dotenv import load_dotenv
 from config import PLANT_CLASSES
 import os
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from project root .env file
+load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env'))
 
 # Build model client using env var API key (groq expects it setup already)
 # Make sure GROQ_API_KEY is set in the .env file.
@@ -42,10 +42,17 @@ class MedicinalPlantChatAssistant:
     """AI chat assistant for medicinal plants, with plant-specific context and memory."""
 
     def __init__(self, model_name=MODEL_NAME, model_provider=MODEL_PROVIDER):
-        self.client = init_chat_model(model_name, model_provider=model_provider)
+        self.model_name = model_name
+        self.model_provider = model_provider
+        self.client = None
         # conversation history: list of tuples (role, text)
         self.conversation_history = []
         self.current_plant = None
+
+    def _get_client(self):
+        if self.client is None:
+            self.client = init_chat_model(self.model_name, model_provider=self.model_provider)
+        return self.client
 
     def set_plant(self, plant_name: str):
         """Set active plant context, reset conversation history, and return initial summary."""
@@ -207,16 +214,19 @@ class MedicinalPlantChatAssistant:
 
         query += f"User: {question}\n"
 
-        # call model
-        response = self.client.invoke(query)
-        text = response.content.strip() if hasattr(response, 'content') else str(response)
+        # call model when API key is available; otherwise use plant database fallback
+        try:
+            response = self._get_client().invoke(query)
+            text = response.content.strip() if hasattr(response, 'content') else str(response)
+            source = 'groq'
+        except Exception:
+            text = self._fallback_answer(question)
+            source = 'fallback'
 
         # If model appears reluctant or refuses, fall back to deterministic plant-based info
         if self._is_refusal_response(text):
             text = self._fallback_answer(question)
             source = 'fallback'
-        else:
-            source = 'groq'
 
         self.conversation_history.append(("assistant", text))
 

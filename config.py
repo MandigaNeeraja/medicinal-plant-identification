@@ -4,7 +4,8 @@ Configuration and constants for the Medicinal Plant Identification project
 import os
 
 # Dataset configuration
-DATASET_PATH = 'dataset'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATASET_PATH = os.path.join(BASE_DIR, 'dataset')
 TRAIN_SPLIT = 0.7
 VAL_SPLIT = 0.15
 TEST_SPLIT = 0.15
