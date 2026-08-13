@@ -28,7 +28,12 @@ desktop.ini
 
 # Project runtime
 uploads/
+instance/
 *.log
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
 
 # Jupyter
 .ipynb_checkpoints/
