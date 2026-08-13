@@ -183,7 +183,7 @@ def predict():
     
     if predictor is None:
         error_msg = 'Model not loaded. Please restart the application.'
-        print(f"[ERROR] Error: {error_msg}")
+        print(f"[ERROR] {error_msg}")
         return jsonify({'success': False, 'error': error_msg}), 500
     
     # Debug: Print request info
@@ -194,7 +194,7 @@ def predict():
     # Check if file is present
     if 'file' not in request.files:
         error_msg = 'No file provided in request'
-        print(f"[ERROR] Error: {error_msg}")
+        print(f"[ERROR] {error_msg}")
         print(f"Available keys: {list(request.files.keys())}")
         return jsonify({'success': False, 'error': error_msg}), 400
     
@@ -204,12 +204,12 @@ def predict():
     
     if file.filename == '':
         error_msg = 'No file selected'
-        print(f"[ERROR] Error: {error_msg}")
+        print(f"[ERROR] {error_msg}")
         return jsonify({'success': False, 'error': error_msg}), 400
     
     if not allowed_file(file.filename):
         error_msg = f'File type not allowed. Allowed types: {", ".join(ALLOWED_EXTENSIONS)}'
-        print(f"[ERROR] Error: {error_msg}")
+        print(f"[ERROR] {error_msg}")
         return jsonify({'success': False, 'error': error_msg}), 400
     
     try:
@@ -218,7 +218,7 @@ def predict():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         print(f"Saving file to: {filepath}")
         file.save(filepath)
-        print(f"[OK] File saved successfully")
+        print("[OK] File saved successfully")
         
         # Verify file exists
         if not os.path.exists(filepath):
@@ -236,7 +236,7 @@ def predict():
         if result['success'] and result['plant'] in PLANT_CLASSES:
             plant_info_data = PLANT_CLASSES[result['plant']]
             result['medicinal_uses'] = plant_info_data['medicinal_uses']
-            print(f"[OK] Plant info added")
+            print("[OK] Plant info added")
         
         # Add file path for display
         result['image_path'] = f'/uploads/{filename}'
