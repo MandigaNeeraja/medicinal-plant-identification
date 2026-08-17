@@ -25,6 +25,10 @@ def get_predictor():
         from src.predictor import PlantPredictor  # noqa: E402 — lazy import for Render startup
 
         model_dir = current_app.config['MODEL_DIR']
+        model_path = os.path.join(model_dir, 'best_model.h5')
+        if not os.path.exists(model_path):
+            raise RuntimeError(f'Model file not found at {model_path}')
+
         _predictor = PlantPredictor(
             model_path=os.path.join(model_dir, 'best_model.h5'),
             label_encoder_path=os.path.join(model_dir, 'label_encoder.pkl'),

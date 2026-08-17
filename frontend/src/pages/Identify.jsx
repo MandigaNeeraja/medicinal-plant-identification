@@ -28,9 +28,7 @@ export default function Identify() {
     setLoading(true);
 
     try {
-      const response = await api.post('/predictions/predict', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      const response = await api.post('/predictions/predict', formData);
       setResult(response.data.data);
       if (response.data.data.success) {
         toast.success('Plant identified successfully');

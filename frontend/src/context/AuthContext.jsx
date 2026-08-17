@@ -1,7 +1,13 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import api, { getErrorMessage } from '../api/client';
+import api, { clearAccessToken, getErrorMessage, setAccessToken } from '../api/client';
 
 const AuthContext = createContext(null);
+
+function persistTokens(data) {
+  if (data?.access_token) {
+    setAccessToken(data.access_token);
+  }
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -24,12 +30,14 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     const response = await api.post('/auth/login', { email, password });
+    persistTokens(response.data.data);
     setUser(response.data.data.user);
     return response.data;
   };
 
   const register = async (name, email, password) => {
     const response = await api.post('/auth/register', { name, email, password });
+    persistTokens(response.data.data);
     setUser(response.data.data.user);
     return response.data;
   };
@@ -38,6 +46,7 @@ export function AuthProvider({ children }) {
     try {
       await api.post('/auth/logout');
     } finally {
+      clearAccessToken();
       setUser(null);
     }
   };

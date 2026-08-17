@@ -126,7 +126,10 @@ def refresh():
         return error_response('User not found', 404)
 
     access_token = create_access_token(identity=str(user.id))
-    response, status = success_response({'user': user.to_dict()}, message='Token refreshed')
+    response, status = success_response(
+        {'user': user.to_dict(), 'access_token': access_token},
+        message='Token refreshed',
+    )
     set_access_cookies(response, access_token)
     return response, status
 
@@ -199,7 +202,8 @@ def google_callback():
     tokens = AuthService.create_tokens(user)
 
     frontend_url = current_app.config['FRONTEND_URL'].rstrip('/')
-    response = redirect(f'{frontend_url}/dashboard')
+    access_token = tokens['access_token']
+    response = redirect(f'{frontend_url}/auth/callback#access_token={access_token}')
     response = _apply_token_cookies(response, tokens)
     return response
 

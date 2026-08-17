@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import History from './pages/History';
 import Identify from './pages/Identify';
 import Login from './pages/Login';
+import AuthCallback from './pages/AuthCallback';
 import PlantDetail from './pages/PlantDetail';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
@@ -21,6 +22,7 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
 
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout />}>

@@ -4,12 +4,27 @@ const API_ROOT = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL.replace(/\/$/, '')}/api`
   : '/api';
 
+const TOKEN_KEY = 'access_token';
+
+export function getAccessToken() {
+  return sessionStorage.getItem(TOKEN_KEY);
+}
+
+export function setAccessToken(token) {
+  if (token) {
+    sessionStorage.setItem(TOKEN_KEY, token);
+  } else {
+    sessionStorage.removeItem(TOKEN_KEY);
+  }
+}
+
+export function clearAccessToken() {
+  sessionStorage.removeItem(TOKEN_KEY);
+}
+
 const api = axios.create({
   baseURL: API_ROOT,
   withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 let refreshPromise = null;
@@ -20,8 +35,29 @@ async function refreshAccessToken() {
       refreshPromise = null;
     });
   }
-  return refreshPromise;
+  const response = await refreshPromise;
+  const token = response.data?.data?.access_token;
+  if (token) {
+    setAccessToken(token);
+  }
+  return response;
 }
+
+api.interceptors.request.use((config) => {
+  const token = getAccessToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  // Let the browser set multipart boundary automatically
+  if (config.data instanceof FormData) {
+    delete config.headers['Content-Type'];
+  } else if (!config.headers['Content-Type']) {
+    config.headers['Content-Type'] = 'application/json';
+  }
+
+  return config;
+});
 
 api.interceptors.response.use(
   (response) => response,
@@ -38,6 +74,7 @@ api.interceptors.response.use(
         await refreshAccessToken();
         return api(originalRequest);
       } catch {
+        clearAccessToken();
         if (!window.location.pathname.startsWith('/login')) {
           window.location.href = '/login';
         }
